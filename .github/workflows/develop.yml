@@ -1,0 +1,19 @@
+name: Develop
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  test-memory-2026:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Vérifier tous les fichiers JPG
+        run: |
+          for img in $(find . -type f -name "*.jpg"); do
+            file "$img"
+          done
