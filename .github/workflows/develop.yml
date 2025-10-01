@@ -37,3 +37,21 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/memory-2026 .
           docker images
+
+  push-memory-2026:
+    runs-on: self-hosted
+    needs: build-memory-2026
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Dockerhub Login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push Docker image
+        shell: bash
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/memory-2026
